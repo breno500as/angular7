@@ -11,14 +11,13 @@ body {
   font-family: "Roboto", "Lato", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 }
 
-.indigo {
+.nav-menu {
   background-color: #3f51b5;
 }
 
 .img-logo {
    max-height: 45px;
 }
-
 
 .margin-container {
   margin-top: 2rem;
@@ -31,6 +30,26 @@ footer {
   position:absolute;
   bottom:0;
   background-color: #E6E6FA;
+}
+
+.INFO {
+  background-color: #3f51b5 !important;
+}
+
+.ERROR {
+   background-color:#d32f2f !important;
+} 
+
+.WARNING {
+  background-color: #e65100 !important;
+} 
+
+.DONE , .SUCCESS {
+ background-color:#26a69a !important; 
+}    
+
+.DEFAULT {
+  background-color: #9e9e9e !important;
 }
 
 
@@ -85,6 +104,3 @@ footer {
   top: 4px;
   right: 10px;
 }
-
-
-

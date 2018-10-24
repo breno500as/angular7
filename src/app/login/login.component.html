@@ -3,42 +3,63 @@
     <div class="col s12 m10">
       <div class="card">
         <div class="card-content">
-             
-          <div class="row">
-            <mz-radio-button-container>
-              <input mz-radio-button
-                  [label]="'Telefone'"
-                  [withGap]="true"
-                  [(ngModel)]="usuarioLogin.tipoAcesso"
+
+          <form name="loginForm" #loginForm="ngForm" novalidate>
+
+            <div class="row">
+              <mz-radio-button-container>
+                <input 
+                  mz-radio-button 
+                  [label]="'Telefone'" 
+                  [(ngModel)]="usuarioLogin.tipoAcesso" 
                   [value]="tipoAcessoTelefone"
-                  id="telefone"
-                  name="tipoAcesso"
+                  id="telefone" 
+                  name="tipoAcesso" 
+                  (click)="limpaCampos()" 
                   type="radio">
-              <input mz-radio-button 
-                  [label]="'Email'"
-                  id="email"
-                  [withGap]="true"
+                <input 
+                  mz-radio-button 
+                  [label]="'Email'" 
+                  id="email" 
+                  [checked]="true" 
                   [(ngModel)]="usuarioLogin.tipoAcesso"
-                  [value]="tipoAcessoEmail"
-                  name="tipoAcesso"
+                  [value]="tipoAcessoEmail" 
+                  (click)="limpaCampos()" 
+                  name="tipoAcesso" 
                   type="radio">
-            </mz-radio-button-container> 
-        </div>
-
-        <div class="row">
-            <div class="input-field col s12">
-              <input id="email" type="email" class="validate" name="email" #email [(ngModel)]="usuarioLogin.usuario.email">
-              <label for="email">Email</label>
+              </mz-radio-button-container>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="input-field col s12">
-              <input id="telefone" type="text"  name="numeroConcatenado" #numeroConcatenado [(ngModel)]="usuarioLogin.usuario.telefone.numeroConcatenado" mask="(00) 00000-0000">
-              <label for="telefone">Telefone</label>
+            <div class="row" *ngIf="usuarioLogin.tipoAcesso === tipoAcessoEmail">
+              <div class="input-field col s12 m12">
+                <input id="email" type="email" class="validate" name="email" required [(ngModel)]="usuarioLogin.usuario.email">
+                <label for="email">Email</label>
+              </div>
             </div>
-        </div>
 
+            <div class="row" *ngIf="usuarioLogin.tipoAcesso === tipoAcessoTelefone">
+              <div class="input-field col s12 m12">
+                <input id="telefone" type="text" name="numeroConcatenado" required [(ngModel)]="usuarioLogin.usuario.telefone.numeroConcatenado"
+                  mask="(00) 00000-0000">
+                <label for="telefone">Telefone</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s12 m12">
+                <input id="senha" type="password" required name="senha" [(ngModel)]="usuarioLogin.usuario.senha">
+                <label for="senha">Senha</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col s12 m12">
+                <button style="width: 100%" class="btn btn-large waves-effect INFO" (click)="login()">Login</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
       </div>
     </div>
   </div>
