@@ -6,5 +6,4 @@ export class Usuario {
     telefone: Telefone = new Telefone();
     senha: string;
     codigoAtivacao: string;
-    
 }
