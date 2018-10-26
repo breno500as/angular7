@@ -44,7 +44,7 @@ footer {
   background-color: #e65100 !important;
 } 
 
-.DONE , .SUCCESS {
+.SUCCESS {
  background-color:#26a69a !important; 
 }    
 
@@ -103,4 +103,36 @@ footer {
   position: relative;
   top: 4px;
   right: 10px;
+}
+
+#sidenav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120vh;
+  background-color: transparent !important;
+  will-change: opacity;
+}
+
+.side-nav {
+  position: fixed;
+  width: 300px;
+  left: 0;
+  top: 0;
+  margin: 0;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  height: 100%;
+  height: calc(100% + 60px);
+  height: -moz-calc(100%);
+  padding-bottom: 60px;
+  background-color: #fff;
+  z-index: 999;
+  overflow-y: auto;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateX(-105%);
+  transform: translateX(-105%);
 }

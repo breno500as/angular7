@@ -10,6 +10,10 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { MzRadioButtonModule } from 'ngx-materialize';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
+import { HttpClientModule } from '@angular/common/http';
+import { MzToastModule } from 'ngx-materialize';
+import { ErroComponent } from './http/erro/erro.component';
+import { NaoEncontradoComponent } from './http/nao-encontrado/nao-encontrado.component';
 
 
 @NgModule({
@@ -17,7 +21,9 @@ import { NgxMaskModule } from 'ngx-mask';
     AppComponent,
     LoginComponent,
     FooterComponent,
-    NavMenuComponent
+    NavMenuComponent,
+    ErroComponent,
+    NaoEncontradoComponent
   ],
   imports: [
     BrowserModule,
@@ -25,8 +31,10 @@ import { NgxMaskModule } from 'ngx-mask';
     CoreModule.forRoot(),
     NgxWebstorageModule.forRoot(),
     NgxMaskModule.forRoot(),
+    HttpClientModule,
     MzRadioButtonModule,
-    FormsModule
+    FormsModule,
+    MzToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]

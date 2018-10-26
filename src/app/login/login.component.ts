@@ -1,8 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UsuarioLogin } from '@app/classes/usuarioLogin';
+import { Login } from '@app/classes/login';
 import { TipoAcesso } from '@app/enum/tipoAcesso';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '@app/core/services/autenticacao/auth.service';
+import { MzToastService } from 'ngx-materialize';
+import { Toast } from '../enum/toast';
+import { toastTimeDelay } from '../core/helpers/constants';
+import { AnotaaiResponse } from '@app/classes/anotaai-response';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,27 +18,28 @@ export class LoginComponent implements OnInit {
 
   @ViewChild('loginForm')
   loginForm: NgForm;
-  usuarioLogin: UsuarioLogin = new UsuarioLogin();
+  login: Login = new Login();
   tipoAcessoEmail: TipoAcesso = TipoAcesso.EMAIL;
   tipoAcessoTelefone: TipoAcesso = TipoAcesso.TELEFONE;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private toastService: MzToastService, private router: Router) { }
 
   ngOnInit() {
   }
 
 
   limpaCampos() {
-    this.usuarioLogin.usuario.email = '';
-    this.usuarioLogin.usuario.telefone.numeroConcatenado = '';
+    this.login.usuario.email = '';
+    this.login.usuario.telefone.numeroConcatenado = '';
   }
 
-  login() {
+  autenticaUsuario() {
 
     if (this.loginForm.valid) {
-      this.authService.login(this.usuarioLogin).subscribe(() => {
-
-      });
+      this.authService.autenticaUsuario(this.login).subscribe((anotaaiResponse: AnotaaiResponse) => {
+        this.authService.setCredentials(anotaaiResponse.login);
+        this.router.navigate(['/adm']);
+      }, (error) => this.toastService.show(error.messages[0].text, toastTimeDelay, Toast.ERROR));
     }
 
   }

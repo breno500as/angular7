@@ -4,6 +4,7 @@ import { AuthService } from './services/autenticacao/auth.service';
 import { AdmGuard } from './services/guards/adm.guard';
 import { PublicGuard } from './services/guards/public.guard';
 import { httpInterceptorProviders } from '@app/core/services/http-interceptors/index-interceptors';
+import { AppCustomPreloaderService } from './services/preloading/app-custom-preloader.service';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ export class CoreModule {
       providers: [
         PublicGuard,
         AdmGuard,
+        AppCustomPreloaderService,
         AuthService,
         httpInterceptorProviders
       ]

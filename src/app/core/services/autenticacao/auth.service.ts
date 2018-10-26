@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'ngx-webstorage';
 import { HttpClient } from '@angular/common/http';
-import { UsuarioLogin } from '@app/classes/usuarioLogin';
-import { environment } from '@env/environment.prod';
+import { Login } from '@app/classes/login';
+import { environment } from '@env/environment';
+import { getPhoneMask } from '../../helpers/stringHelper';
+import { credential } from '../../helpers/constants';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +14,44 @@ export class AuthService {
 
   constructor(private storage: LocalStorageService, private httpClient: HttpClient) { }
 
-  saveValue(value: any) {
-    this.storage.store('boundValue', value);
+  setCredentials(login) {
+
+    let telefoneStr = login.usuario.telefone.ddd.toString() + login.usuario.telefone.numero.toString();
+
+    const authdata =  btoa(login.usuario.email + ':' + login.sessionID + ':' + login.usuario.telefone.ddi.toString() + telefoneStr);
+    const index = login.usuario.nome.indexOf(' ');
+    const primeiroNome = index !== -1 ? login.usuario.nome.substring(0, index) : login.usuario.nome;
+
+    telefoneStr = getPhoneMask(telefoneStr);
+
+    const loginStorage = { telefoneStr: '', authdata: '', primeiroNome: '', email: '',  endereco: ''};
+
+    loginStorage.telefoneStr = telefoneStr;
+    loginStorage.authdata = authdata;
+    loginStorage.primeiroNome = primeiroNome;
+    loginStorage.email = login.usuario.email;
+    loginStorage.endereco = 'Rua da Paz';
+
+    const data = JSON.stringify(loginStorage);
+
+    this.storage.store(credential, data);
   }
 
-
-  retrieveValue(value: string) {
-    return this.storage.retrieve(value);
+  temUsuario(): boolean {
+    return this.storage.retrieve(credential) !== null;
   }
 
-  clearItem(value: string) {
-    this.storage.clear(value);
+  getUsuario() {
+    return this.storage.retrieve(credential);
   }
 
-  login(usuarioLogin: UsuarioLogin) {
-     return this.httpClient.post(`${environment.url}/login`, usuarioLogin);
+  limpaUsuario() {
+    this.storage.clear(credential);
+  }
+
+  autenticaUsuario(login: Login) {
+    login.usuario.senha = btoa(login.usuario.senha);
+    return this.httpClient.post(`${environment.url}/usuarios/login`, login);
   }
 
 }
